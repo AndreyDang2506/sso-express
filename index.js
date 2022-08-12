@@ -5,6 +5,8 @@ const app = express()
 const port = 3000
 
 app.use(express.json());
+app.set('view engine', 'ejs')
+app.set('views', './views')
 
 db.sequelize.sync({ force: true })
 .then(() => {
@@ -14,9 +16,9 @@ db.sequelize.sync({ force: true })
   console.log("Failed to sync db: " + err.message);
 });
 
-app.get('/', (req, res) => {
-  res.send('Hello World!')
-})
+app.get('/', function(req, res) {
+  res.render('home')
+});
 
 require("./routers/turorial.routes")(app);
 
